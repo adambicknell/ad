@@ -1,24 +1,14 @@
-import os, sys
-#from setuptools import setup
-import distutils.core
+import os
+import sys
+from setuptools import setup
+from setuptools.command.build_py import build_py
 
-# Building through 2to3, for Python 3 (see also setup(...,
-# cmdclass=...), below:
-try:
-    from distutils.command.build_py import build_py_2to3 as build_py
-except ImportError:
-    # 2.x
-    from distutils.command.build_py import build_py
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
-extras = {}
-if sys.version_info >= (3,):
-    extras['use_2to3'] = True
-
 readme = 'README'
 
-distutils.core.setup(
+setup(
     name='ad',
     version='1.3.2',
     author='Abraham Lee',
@@ -28,7 +18,6 @@ distutils.core.setup(
     license='BSD License',
     long_description=read(readme),
     package_data={'': [readme]},
-    #include_package_data=True,
     packages=['ad', 'ad.admath', 'ad.linalg'],
     keywords=[
         'automatic differentiation',
@@ -39,7 +28,7 @@ distutils.core.setup(
         'computational differentiation',
         'optimization',
         'linear algebra'
-        ],
+    ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Education',
@@ -53,6 +42,7 @@ distutils.core.setup(
         'Programming Language :: Python :: 3.1',
         'Programming Language :: Python :: 3.2',
         'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.10',
         'Topic :: Education',
         'Topic :: Scientific/Engineering',
         'Topic :: Scientific/Engineering :: Mathematics',
@@ -61,7 +51,6 @@ distutils.core.setup(
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Utilities'
-        ],
-    cmdclass={'build_py': build_py},
-    **extras
-    )
+    ],
+    cmdclass={'build_py': build_py}
+)
